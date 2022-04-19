@@ -11620,7 +11620,7 @@ PrefabInstance:
     - target: {fileID: 1837324664885972820, guid: d45e8a6999317d2428a51593da44d3ab,
         type: 3}
       propertyPath: m_Name
-      value: XR Rig
+      value: XR Origin
       objectReference: {fileID: 0}
     - target: {fileID: 1837324664885972822, guid: d45e8a6999317d2428a51593da44d3ab,
         type: 3}
@@ -11681,6 +11681,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_EnableInputActions
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355830512398039088, guid: d45e8a6999317d2428a51593da44d3ab,
+        type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8509901044822395909, guid: d45e8a6999317d2428a51593da44d3ab,
         type: 3}
