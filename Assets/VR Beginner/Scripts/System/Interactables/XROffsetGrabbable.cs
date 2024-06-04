@@ -9,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// grabbed object and the controller instead of snapping the object to the controller. Better for UX and the illusion
 /// of holding the thing (see Tomato Presence : https://owlchemylabs.com/tomatopresence/)
 /// </summary>
-public class XROffsetGrabbable : XRGrabInteractable
+public class XROffsetGrabbable : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
 {
     class SavedTransform
     {
@@ -18,7 +18,7 @@ public class XROffsetGrabbable : XRGrabInteractable
     }
     
     
-    Dictionary<XRBaseInteractor, SavedTransform> m_SavedTransforms = new Dictionary<XRBaseInteractor, SavedTransform>();
+    Dictionary<UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor, SavedTransform> m_SavedTransforms = new Dictionary<UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor, SavedTransform>();
 
     Rigidbody m_Rb;
 
@@ -32,21 +32,21 @@ public class XROffsetGrabbable : XRGrabInteractable
     
     protected override void OnSelectEntered(SelectEnterEventArgs evt)
     {
-        var interactor = evt.interactor;
-        if (interactor is XRDirectInteractor)
+        var interactor = evt.interactorObject;
+        if (interactor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor)
         {
             SavedTransform savedTransform = new SavedTransform();
             
-            savedTransform.OriginalPosition = interactor.attachTransform.localPosition;
-            savedTransform.OriginalRotation = interactor.attachTransform.localRotation;
+            savedTransform.OriginalPosition = interactor.transform.localPosition;
+            savedTransform.OriginalRotation = interactor.transform.localRotation;
 
             m_SavedTransforms[interactor] = savedTransform;
             
             
             bool haveAttach = attachTransform != null;
 
-            interactor.attachTransform.position = haveAttach ? attachTransform.position : m_Rb.worldCenterOfMass;
-            interactor.attachTransform.rotation = haveAttach ? attachTransform.rotation : m_Rb.rotation;
+            interactor.transform.position = haveAttach ? transform.position : m_Rb.worldCenterOfMass;
+            interactor.transform.rotation = haveAttach ? transform.rotation : m_Rb.rotation;
         }
 
         base.OnSelectEntered(evt);
@@ -54,14 +54,14 @@ public class XROffsetGrabbable : XRGrabInteractable
 
     protected override void OnSelectExited(SelectExitEventArgs evt)
     {
-        var interactor = evt.interactor;
-        if (interactor is XRDirectInteractor)
+        var interactor = evt.interactorObject;
+        if (interactor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor)
         {
             SavedTransform savedTransform = null;
             if (m_SavedTransforms.TryGetValue(interactor, out savedTransform))
             {
-                interactor.attachTransform.localPosition = savedTransform.OriginalPosition;
-                interactor.attachTransform.localRotation = savedTransform.OriginalRotation;
+                interactor.transform.localPosition = savedTransform.OriginalPosition;
+                interactor.transform.localRotation = savedTransform.OriginalRotation;
 
                 m_SavedTransforms.Remove(interactor);
             }
@@ -70,9 +70,9 @@ public class XROffsetGrabbable : XRGrabInteractable
         base.OnSelectExited(evt);
     }
 
-    public override bool IsSelectableBy(XRBaseInteractor interactor)
+    public override bool IsSelectableBy(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor)
     {
-        int interactorLayerMask = 1 << interactor.gameObject.layer;
-        return base.IsSelectableBy(interactor) && (interactionLayerMask.value & interactorLayerMask) != 0 ;
+        int interactorLayerMask = 1 << interactor.interactionLayers.value;
+        return base.IsSelectableBy(interactor) && (interactionLayers.value & interactorLayerMask) != 0 ;
     }
 }

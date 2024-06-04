@@ -25,11 +25,11 @@ public class MasterController : MonoBehaviour
     public GameObject TeleporterParent;
     
     [Header("Reference")]
-    public XRRayInteractor RightTeleportInteractor;
-    public XRRayInteractor LeftTeleportInteractor;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor RightTeleportInteractor;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor LeftTeleportInteractor;
 
-    public XRDirectInteractor RightDirectInteractor;
-    public XRDirectInteractor LeftDirectInteractor;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor RightDirectInteractor;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor LeftDirectInteractor;
 
     public MagicTractorBeam RightTractorBeam;
     public MagicTractorBeam LeftTractorBeam;
@@ -39,8 +39,8 @@ public class MasterController : MonoBehaviour
     InputDevice m_LeftInputDevice;
     InputDevice m_RightInputDevice;
 
-    XRInteractorLineVisual m_RightLineVisual;
-    XRInteractorLineVisual m_LeftLineVisual;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual m_RightLineVisual;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual m_LeftLineVisual;
 
     HandPrefab m_RightHandPrefab;
     HandPrefab m_LeftHandPrefab;
@@ -57,7 +57,7 @@ public class MasterController : MonoBehaviour
     InteractionLayerMask m_OriginalRightMask;
     InteractionLayerMask m_OriginalLeftMask;
     
-    List<XRBaseInteractable> m_InteractableCache = new List<XRBaseInteractable>(16);
+    List<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable> m_InteractableCache = new List<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>(16);
 
     void Awake()
     {
@@ -78,10 +78,10 @@ public class MasterController : MonoBehaviour
 
     void Start()
     {
-        m_RightLineVisual = RightTeleportInteractor.GetComponent<XRInteractorLineVisual>();
+        m_RightLineVisual = RightTeleportInteractor.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
         m_RightLineVisual.enabled = false;
 
-        m_LeftLineVisual = LeftTeleportInteractor.GetComponent<XRInteractorLineVisual>();
+        m_LeftLineVisual = LeftTeleportInteractor.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
         m_LeftLineVisual.enabled = false;
 
         m_RightController = RightTeleportInteractor.GetComponent<XRReleaseController>();

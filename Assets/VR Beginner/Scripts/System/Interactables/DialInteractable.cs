@@ -12,7 +12,7 @@ using UnityEditor;
 /// Rotation can be driven either by controller rotation (e.g. rotating a volume dial) or controller movement (e.g.
 /// pulling down a lever)
 /// </summary>
-public class DialInteractable : XRBaseInteractable
+public class DialInteractable : UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable
 {
     public enum InteractionType
     {
@@ -48,7 +48,7 @@ public class DialInteractable : XRBaseInteractable
     public float CurrentAngle => m_CurrentAngle;
     public int CurrentStep => m_CurrentStep;
     
-    XRBaseInteractor m_GrabbingInteractor;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor m_GrabbingInteractor;
     Quaternion m_GrabbedRotation;
     
     Vector3 m_StartingWorldAxis;
@@ -178,7 +178,7 @@ public class DialInteractable : XRBaseInteractable
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        var interactor = args.interactor;
+        var interactor = args.interactorObject;
         m_GrabbedRotation = interactor.transform.rotation;
         m_GrabbingInteractor = interactor;
 
@@ -249,10 +249,10 @@ public class DialInteractable : XRBaseInteractable
         Destroy(m_SyncTransform.gameObject);
     }
     
-    public override bool IsSelectableBy(XRBaseInteractor interactor)
+    public override bool IsSelectableBy(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor)
     {
-        int interactorLayerMask = 1 << interactor.gameObject.layer;
-        return base.IsSelectableBy(interactor) && (interactionLayerMask.value & interactorLayerMask) != 0 ;
+        int interactorLayerMask = 1 << interactor.interactionLayers.value;
+        return base.IsSelectableBy(interactor) && (interactionLayers.value & interactorLayerMask) != 0 ;
     }
 
     #if UNITY_EDITOR

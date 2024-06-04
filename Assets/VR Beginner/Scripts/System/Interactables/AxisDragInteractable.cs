@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 /// <summary>
 /// Custom interactable that can be dragged along an axis. Can either be continuous or snap to integer steps.
 /// </summary>
-public class AxisDragInteractable : XRBaseInteractable
+public class AxisDragInteractable : UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable
 {
     [Serializable]
     public class DragDistanceEvent : UnityEvent<float> {}
@@ -38,7 +38,7 @@ public class AxisDragInteractable : XRBaseInteractable
     Vector3 m_GrabbedOffset;
     float m_CurrentDistance;
     int m_CurrentStep;
-    XRBaseInteractor m_GrabbingInteractor;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor m_GrabbingInteractor;
 
     float m_StepLength;
     
@@ -144,7 +144,7 @@ public class AxisDragInteractable : XRBaseInteractable
     {
         base.OnSelectEntered(args);
 
-        var interactor = args.interactor;
+        var interactor = args.interactorObject;
         m_GrabbedOffset = interactor.transform.position - transform.position;
         m_GrabbingInteractor = interactor;
     }

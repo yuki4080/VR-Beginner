@@ -4,7 +4,7 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-[RequireComponent(typeof(XRBaseInteractor))]
+[RequireComponent(typeof(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor))]
 public class TriggerAnimationEvent : MonoBehaviour
 {
     public string TriggerName;
@@ -14,20 +14,20 @@ public class TriggerAnimationEvent : MonoBehaviour
     void Start()
     {
         m_TriggerID = Animator.StringToHash(TriggerName);
-        var interactor = GetComponent<XRBaseInteractor>();
+        var interactor = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor>();
         interactor.selectEntered.AddListener(TriggerAnim);
     }
 
     public void TriggerAnim(SelectEnterEventArgs args)
     {
-        var interactable = args.interactable;
-        var animator = interactable.GetComponentInChildren<Animator>();
+        var interactable = args.interactableObject;
+        var animator = interactable.transform.GetComponentInChildren<Animator>();
 
         if (animator != null)
         {
             animator.SetTrigger(TriggerName);
         }
 
-        interactable.interactionLayerMask &= ~(1<<LayerMask.NameToLayer("Hands"));
+        //interactable.interactionLayers &= ~(1<<LayerMask.NameToLayer("Hands"));
     }
 }

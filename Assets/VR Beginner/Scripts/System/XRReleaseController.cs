@@ -36,8 +36,7 @@ public class XRReleaseController : XRController
 
     protected void LateUpdate()
     {
-        XRControllerState state;
-        GetControllerState(out state);
+        XRControllerState state = currentControllerState;
         
         var selectState = state.selectInteractionState;
 
@@ -61,7 +60,7 @@ public class XRReleaseController : XRController
         }
 
         state.selectInteractionState = selectState;
-        SetControllerState(state);
+        currentControllerState = state;
         
         m_Selected = false;
     }
