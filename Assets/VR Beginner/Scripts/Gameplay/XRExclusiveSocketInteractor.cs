@@ -21,6 +21,6 @@ public class XRExclusiveSocketInteractor : XRSocketInteractor
 
     public override bool CanHover(XRBaseInteractable interactable)
     {
-        return CanSelect(interactable);
+        return base.CanSelect(interactable);
     }
 }
